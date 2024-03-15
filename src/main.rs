@@ -17,8 +17,6 @@ struct Args {
     category_rules: Option<PathBuf>,
 }
 
-
-
 fn main() {
     let args = Args::parse();
 
@@ -30,9 +28,8 @@ fn main() {
     for item in history.operations.operations.iter() {
         for rule in rules.rules.iter() {
             if rule.match_rules.iter().any(|q| q.transaction_description_compiled.is_match(&item.description)) {
-                let key = String::from(rule.category_name.as_str());
-                categories_summary.entry(key.clone()).or_insert(0.0);
-                categories_summary.entry(key).and_modify(|e| *e += item.amount);
+                categories_summary.entry(rule.category_name.clone()).or_insert(0.0);
+                categories_summary.entry(rule.category_name.clone()).and_modify(|e| *e += item.amount);
             }
         }
     }
