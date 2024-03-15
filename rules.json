@@ -1,0 +1,14 @@
+{
+  "rules": [
+    {
+      "category_name": "Jedzenie poza domem",
+      "match_rules": [
+        {
+          "transaction_type": "",
+          "transaction_description": ""
+        }
+      ]
+    }
+  ],
+  "ignore": []
+}
