@@ -1,7 +1,7 @@
 use std::fs::File;
 use std::path::PathBuf;
 
-use regex::Regex;
+use regex::{Regex, RegexBuilder};
 use serde::Deserialize;
 
 fn default_regex() -> Regex {
@@ -33,11 +33,17 @@ pub struct CategoryRules {
 
 fn compile_rule_match(mut rule_match: MatchRule) -> MatchRule {
     if !rule_match.transaction_type.is_empty() {
-        rule_match.transaction_type_compiled = Regex::new(&rule_match.transaction_type).unwrap();
+        rule_match.transaction_type_compiled = RegexBuilder::new(&rule_match.transaction_type)
+            .case_insensitive(true)
+            .build()
+            .unwrap();
     }
 
     if !rule_match.transaction_description.is_empty() {
-        rule_match.transaction_description_compiled = Regex::new(&rule_match.transaction_description).unwrap();
+        rule_match.transaction_description_compiled = RegexBuilder::new(&rule_match.transaction_description)
+            .case_insensitive(true)
+            .build()
+            .unwrap();
     }
 
     return rule_match;

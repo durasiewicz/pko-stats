@@ -10,6 +10,10 @@
         {
           "transaction_type": "",
           "transaction_description": "KFC"
+        },
+        {
+          "transaction_type": "",
+          "transaction_description": "Pyszne.pl"
         }
       ]
     },
@@ -18,11 +22,11 @@
       "match_rules": [
         {
           "transaction_type": "",
-          "transaction_description": "AUCHAN"
+          "transaction_description": "Auchan"
         },
         {
           "transaction_type": "",
-          "transaction_description": "BIEDRONKA"
+          "transaction_description": "Biedronka"
         }
       ]
     }
