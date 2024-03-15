@@ -5,7 +5,24 @@
       "match_rules": [
         {
           "transaction_type": "",
-          "transaction_description": ""
+          "transaction_description": "McDonalds"
+        },
+        {
+          "transaction_type": "",
+          "transaction_description": "KFC"
+        }
+      ]
+    },
+    {
+      "category_name": "Żywność i chemia domowa",
+      "match_rules": [
+        {
+          "transaction_type": "",
+          "transaction_description": "AUCHAN"
+        },
+        {
+          "transaction_type": "",
+          "transaction_description": "BIEDRONKA"
         }
       ]
     }
