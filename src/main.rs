@@ -2,6 +2,7 @@ use std::collections::HashMap;
 use std::path::PathBuf;
 
 use clap::Parser;
+use tabled::builder::Builder;
 use tabled::settings::{Modify, Width};
 use tabled::settings::object::Segment;
 use tabled::Table;
@@ -71,10 +72,15 @@ fn main() {
         let mut cat_keys: Vec<_> = month_summary.get(month).unwrap().keys().collect();
         cat_keys.sort();
 
+        let mut table_builder = Builder::default();
+
         for cat in cat_keys {
             let cat_amount = month_summary.get(month).unwrap().get(cat).unwrap();
-            println!("{}: {}", cat, format!("{:.2}", cat_amount.abs()));
+            table_builder.push_record(vec![cat, &format!("{:.2}", cat_amount.abs())]);
         }
+
+        let table = table_builder.build();
+        println!("{}", table.to_string());
     }
 
     if !uncategorized.is_empty() {
