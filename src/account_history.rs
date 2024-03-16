@@ -3,6 +3,7 @@ use std::path::PathBuf;
 
 use chrono::NaiveDate;
 use serde::Deserialize;
+use tabled::Tabled;
 
 use crate::date_deserialize;
 
@@ -21,7 +22,7 @@ pub struct Search {
     pub filtering: String,
 }
 
-#[derive(Debug, Deserialize)]
+#[derive(Debug, Deserialize, Tabled)]
 pub struct Operation {
     #[serde(rename = "order-date", with = "date_deserialize")]
     pub order_date: NaiveDate,
@@ -57,5 +58,6 @@ pub struct AccountHistory {
 
 pub fn read_history(file_path: &PathBuf) -> AccountHistory {
     let file = File::open(file_path).unwrap();
-    return serde_xml_rs::from_reader(&file).unwrap();
+
+    serde_xml_rs::from_reader(&file).unwrap()
 }

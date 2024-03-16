@@ -46,7 +46,7 @@ fn compile_rule_match(mut rule_match: MatchRule) -> MatchRule {
             .unwrap();
     }
 
-    return rule_match;
+    rule_match
 }
 
 pub fn read_rules(file_path: &PathBuf) -> CategoryRules {
@@ -70,6 +70,6 @@ pub fn read_rules(file_path: &PathBuf) -> CategoryRules {
             .collect(),
     };
 
-    return result;
+    result
 }
 
