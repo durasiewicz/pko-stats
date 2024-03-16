@@ -73,11 +73,15 @@ fn main() {
         cat_keys.sort();
 
         let mut table_builder = Builder::default();
+        let mut amount_summary = 0.0;
 
         for cat in cat_keys {
             let cat_amount = month_summary.get(month).unwrap().get(cat).unwrap();
-            table_builder.push_record(vec![cat, &format!("{:.2}", cat_amount.abs())]);
+            table_builder.push_record(vec![cat, &format!("{:.2}", cat_amount)]);
+            amount_summary += cat_amount;
         }
+
+        table_builder.push_record(vec!["", &format!("{:.2}", amount_summary)]);
 
         let table = table_builder.build();
         println!("{}", table.to_string());

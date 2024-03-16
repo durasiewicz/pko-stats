@@ -1,7 +1,7 @@
 {
   "rules": [
     {
-      "category_name": "Jedzenie poza domem",
+      "category_name": "Eating out",
       "match_rules": [
         {
           "transaction_type": "",
@@ -10,15 +10,11 @@
         {
           "transaction_type": "",
           "transaction_description": "KFC"
-        },
-        {
-          "transaction_type": "",
-          "transaction_description": "Pyszne.pl"
         }
       ]
     },
     {
-      "category_name": "Żywność i chemia domowa",
+      "category_name": "Groceries",
       "match_rules": [
         {
           "transaction_type": "",
@@ -26,10 +22,13 @@
         },
         {
           "transaction_type": "",
-          "transaction_description": "Biedronka"
+          "transaction_description": "Carrefour"
+        },
+        {
+          "transaction_type": "",
+          "transaction_description": "Lidl"
         }
       ]
     }
-  ],
-  "ignore": []
+  ]
 }
