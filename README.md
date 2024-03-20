@@ -1,6 +1,6 @@
 Simple tool to categorize operations from PKO BP statement. Categorized transactions are grouping by month. Maybe in the future there will be option to define custom grouping rules. 
 
-You can define rules in  `rules.json`, eg:
+You can set rules in  `rules.json`, eg:
 
 ```json
 {
@@ -38,7 +38,11 @@ You can define rules in  `rules.json`, eg:
   ]
 }
 ```
-Defining `match_rules`, you can use Regex patterns (case-insensitive) in all fields.
+By default, application is looking for `rules.json` file on the same path as execetable. 
+
+You can provide different path and/or filename, using `--category-rules` cmd line option. 
+
+Defining `match_rules`, one can use Regex patterns (case-insensitive) in all fields.
 
 As for now, only statements in XML format are supported.
 
