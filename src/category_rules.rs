@@ -49,6 +49,17 @@ fn compile_rule_match(mut rule_match: MatchRule) -> MatchRule {
     rule_match
 }
 
+pub trait Matching {
+    fn is_match(&self, operation_type: &String, description: &String) -> bool;
+}
+
+impl Matching for CategoryRule {
+    fn is_match(&self, operation_type: &String, description: &String) -> bool {
+        self.match_rules.iter().any(|q| q.transaction_type_compiled.is_match(&operation_type)) ||
+            self.match_rules.iter().any(|q| q.transaction_description_compiled.is_match(&description))
+    }
+}
+
 pub fn read_rules(file_path: &PathBuf) -> CategoryRules {
     let file = File::open(file_path).unwrap();
     let content: CategoryRules = serde_json::from_reader(&file).unwrap();

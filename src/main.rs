@@ -8,7 +8,7 @@ use tabled::settings::object::Segment;
 use tabled::Table;
 
 use crate::account_history::{Operation, read_history};
-use crate::category_rules::read_rules;
+use crate::category_rules::{Matching, read_rules};
 
 mod category_rules;
 mod account_history;
@@ -39,7 +39,7 @@ fn main() {
         let mut has_matched_category = false;
 
         for rule in rules.rules.iter() {
-            if rule.match_rules.iter().any(|q| q.transaction_description_compiled.is_match(&item.description)) {
+            if rule.is_match(&item.op_type, &item.description) {
                 let date_summary_key = item.order_date.format("%Y-%m").to_string();
                 month_summary.entry(date_summary_key.clone()).or_insert(HashMap::new());
 
