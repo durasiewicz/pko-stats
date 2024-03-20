@@ -30,5 +30,15 @@
         }
       ]
     }
+  ],
+  "ignore": [
+    {
+      "match_rules": [
+        {
+          "transaction_type": "Own transaction",
+          "transaction_description": ""
+        }
+      ]
+    }
   ]
 }

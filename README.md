@@ -1,4 +1,4 @@
-Simple tool to categorize operations from PKO BP statement. Categorized transactions are grouping by month. Maybe in the future there will be option to define custom grouping rules. 
+Simple CLI tool to categorize operations from PKO BP statement. Transactions are grouping and summarizing by month. 
 
 You can set rules in  `rules.json`, eg:
 
@@ -35,14 +35,25 @@ You can set rules in  `rules.json`, eg:
         }
       ]
     }
+  ],
+  "ignore": [
+    {
+      "match_rules": [
+        {
+          "transaction_type": "Own transaction",
+          "transaction_description": ""
+        }
+      ]
+    }
   ]
 }
 ```
-By default, application is looking for `rules.json` file on the same path as execetable. 
+By default, application is looking for `rules.json` file on the same path as executable. 
 
 You can provide different path and/or filename, using `--category-rules` cmd line option. 
 
-Defining `match_rules`, one can use Regex patterns (case-insensitive) in all fields.
+Defining `match_rules`, one can use Regex patterns (case-insensitive) in all fields. 
+If you want to ignore some operations, just add proper rule in `ignore` section.
 
 As for now, only statements in XML format are supported.
 

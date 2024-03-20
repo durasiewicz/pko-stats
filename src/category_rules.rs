@@ -7,13 +7,15 @@ use serde::Deserialize;
 fn default_regex() -> Regex {
     Regex::new("").unwrap()
 }
+fn empty_string() -> String { "".to_string() }
 
 #[derive(Deserialize)]
 pub struct MatchRule {
+    #[serde(default = "empty_string")]
     pub transaction_type: String,
     #[serde(skip, default = "default_regex")]
     pub transaction_type_compiled: Regex,
-
+    #[serde(default = "empty_string")]
     pub transaction_description: String,
     #[serde(skip, default = "default_regex")]
     pub transaction_description_compiled: Regex,
@@ -21,6 +23,7 @@ pub struct MatchRule {
 
 #[derive(Deserialize)]
 pub struct CategoryRule {
+    #[serde(default = "empty_string")]
     pub category_name: String,
     pub match_rules: Vec<MatchRule>,
 }
@@ -55,8 +58,8 @@ pub trait Matching {
 
 impl Matching for CategoryRule {
     fn is_match(&self, operation_type: &String, description: &String) -> bool {
-        self.match_rules.iter().any(|q| q.transaction_type_compiled.is_match(&operation_type)) ||
-            self.match_rules.iter().any(|q| q.transaction_description_compiled.is_match(&description))
+        self.match_rules.iter().any(|q| !q.transaction_type.is_empty() && q.transaction_type_compiled.is_match(&operation_type)) ||
+            self.match_rules.iter().any(|q| !q.transaction_description.is_empty() && q.transaction_description_compiled.is_match(&description))
     }
 }
 
@@ -68,6 +71,10 @@ pub fn read_rules(file_path: &PathBuf) -> CategoryRules {
     {
         rules: content.rules.into_iter()
             .map(|mut x| {
+                if x.category_name.is_empty() {
+                    panic!("Matching rule category name can't be empty.")
+                }
+
                 x.match_rules = x.match_rules.into_iter().map(|item| compile_rule_match(item)).collect();
                 return x;
             })

@@ -37,6 +37,18 @@ fn main() {
 
     for item in history.operations.operations.into_iter() {
         let mut has_matched_category = false;
+        let mut is_ignored = false;
+
+        for rule in rules.ignore.iter() {
+            if rule.is_match(&item.op_type, &item.description) {
+                is_ignored = true;
+                break;
+            }
+        }
+
+        if is_ignored {
+            continue;
+        }
 
         for rule in rules.rules.iter() {
             if rule.is_match(&item.op_type, &item.description) {
