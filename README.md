@@ -38,12 +38,8 @@ You can set rules in  `rules.json`, eg:
   ],
   "ignore": [
     {
-      "match_rules": [
-        {
-          "transaction_type": "Own transaction",
-          "transaction_description": ""
-        }
-      ]
+      "transaction_type": "Own transaction",
+      "transaction_description": ""
     }
   ]
 }
