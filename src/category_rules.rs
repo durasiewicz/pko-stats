@@ -7,6 +7,7 @@ use serde::Deserialize;
 fn default_regex() -> Regex {
     Regex::new("").unwrap()
 }
+
 fn empty_string() -> String { "".to_string() }
 
 #[derive(Deserialize)]
@@ -31,7 +32,7 @@ pub struct CategoryRule {
 #[derive(Deserialize)]
 pub struct CategoryRules {
     pub rules: Vec<CategoryRule>,
-    pub ignore: Vec<CategoryRule>,
+    pub ignore: Vec<MatchRule>,
 }
 
 fn compile_rule_match(mut rule_match: MatchRule) -> MatchRule {
@@ -56,10 +57,16 @@ pub trait Matching {
     fn is_match(&self, operation_type: &String, description: &String) -> bool;
 }
 
+impl Matching for MatchRule {
+    fn is_match(&self, operation_type: &String, description: &String) -> bool {
+        !self.transaction_type.is_empty() && self.transaction_type_compiled.is_match(&operation_type) ||
+            !self.transaction_description.is_empty() && self.transaction_description_compiled.is_match(&description)
+    }
+}
+
 impl Matching for CategoryRule {
     fn is_match(&self, operation_type: &String, description: &String) -> bool {
-        self.match_rules.iter().any(|q| !q.transaction_type.is_empty() && q.transaction_type_compiled.is_match(&operation_type)) ||
-            self.match_rules.iter().any(|q| !q.transaction_description.is_empty() && q.transaction_description_compiled.is_match(&description))
+        self.match_rules.iter().any(|q| q.is_match(operation_type, description))
     }
 }
 
@@ -81,10 +88,7 @@ pub fn read_rules(file_path: &PathBuf) -> CategoryRules {
             .collect(),
 
         ignore: content.ignore.into_iter()
-            .map(|mut x| {
-                x.match_rules = x.match_rules.into_iter().map(|item| compile_rule_match(item)).collect();
-                return x;
-            })
+            .map(|x| compile_rule_match(x))
             .collect(),
     };
 
